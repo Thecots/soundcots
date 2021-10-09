@@ -11,6 +11,7 @@ main{
     display: flex;
     align-items: center;
     padding: 0 3%;
+    user-select: none;
 }
     .slider img{
         max-width: 100%;
@@ -71,7 +72,6 @@ main{
         padding: 25px 0px;
         border-radius: 5px;
         font-size: 14px;
-        cursor: pointer;
         background-color: rgb(245 245 245 / 56%);
         animation: all 0.3s ease;
 

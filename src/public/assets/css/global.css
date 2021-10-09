@@ -97,10 +97,10 @@ header{
 }
 
 .t:hover{
-    transform: scale(1.05) !important;
+    transform: scale(1.05);
 }
 .t:active{
-    transform: scale(0.95) !important;
+    transform: scale(0.95);
 }
 
 
