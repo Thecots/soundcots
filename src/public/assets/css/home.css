@@ -12,9 +12,11 @@ main{
     align-items: center;
     padding: 0 3%;
     user-select: none;
+
 }
     .slider img{
         max-width: 100%;
+        width: 100%;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -23,12 +25,16 @@ main{
     .slider .textBox{
         z-index: 10;
     }
-        .slider .textBox h2 {
+        .slider .textBox h2{
             color: white;
             font-size: 55px;
             letter-spacing: 2px;
             font-weight: 300;
             filter: drop-shadow(0px 0px 10px black);
+        }
+        .slider .textBox h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
         }
 .newAlbums{
     max-width: 100%;
@@ -72,7 +78,7 @@ main{
         padding: 25px 0px;
         border-radius: 5px;
         font-size: 14px;
-        background-color: rgb(245 245 245 / 56%);
+        background-color: white;
         animation: all 0.3s ease;
 
         display: flex;
@@ -90,4 +96,7 @@ main{
             }
         .grid .container .albumInfo p:first-child{
             font-weight: 500;
+        }
+        .grid .container .albumInfo a{
+            margin-top: 15px;
         }

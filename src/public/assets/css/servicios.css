@@ -1,0 +1,75 @@
+main{
+    width: 100%;
+    height: fit-content;
+}
+
+.slider{
+    width: 100%;
+    height: 350px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 3%;
+    user-select: none;
+
+}
+    .slider img{
+        max-width: 100%;
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) ;
+    }
+    .slider .textBox{
+        z-index: 10;
+    }
+        .slider .textBox h2{
+            color: white;
+            font-size: 55px;
+            letter-spacing: 2px;
+            font-weight: 300;
+            filter: drop-shadow(0px 0px 10px black);
+        }
+
+
+
+
+
+
+.servicios{
+    max-width: 100%;
+    width: 1300px;
+    height: 350px;
+    margin: 0 auto;
+    position: relative;
+    padding: 25px 10px;
+}
+.grid{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns:  repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.service {
+    text-align: center;
+    padding: 25px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: transparent;
+    animation: all 0.3s ease;
+}
+.service img{
+    width: 20%;
+    margin-bottom: 10px;
+    filter: invert(20%) sepia(14%) saturate(81%) hue-rotate(243deg) brightness(101%) contrast(93%);
+}
+.service h3{
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+        
+        
