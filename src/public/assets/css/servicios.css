@@ -60,9 +60,11 @@ main{
     font-size: 14px;
     cursor: pointer;
     background-color: transparent;
+    transition: all 0.3s ease;
     animation: all 0.3s ease;
 }
 .service img{
+    user-select: none;
     width: 20%;
     margin-bottom: 10px;
     filter: invert(20%) sepia(14%) saturate(81%) hue-rotate(243deg) brightness(101%) contrast(93%);
@@ -71,5 +73,19 @@ main{
     font-weight: 600;
     margin-bottom: 8px;
 }
+
+.service p {
+    margin-top: 5px;
+    font-weight: 400;
+}
         
-        
+
+.service:hover{
+    transform: scale(1.08);
+    font-weight: 400;
+
+}
+
+.service:active{
+    transform: scale(0.92);
+}

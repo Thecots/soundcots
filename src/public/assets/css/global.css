@@ -9,6 +9,7 @@
 
 body{
     background: /* #dae0e6 */ white;
+    padding-top: 100px;
 }
 
 /* HEADER */
@@ -16,7 +17,15 @@ header{
     display: flex;
     flex-direction: column;
     gap: 5px;
+    position: fixed;
+    top: 0;
+    background: white;
+    width: 100%;
+    z-index: 100;
+    left: 0;
+    box-shadow: 1px -14px 20px 5px;
 }
+
     header div{
         width: 100%;
         display: flex; 
