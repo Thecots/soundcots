@@ -9,6 +9,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <link rel="stylesheet" href="assets/css/scrollbar.css">
   <link rel="icon" href="assets/img/logo.png">
+  {{#if homeCSS}}
+    <link rel="stylesheet" href="assets/css/home.css">
+  {{/if}}
+  {{#if catalogoCSS}}
+    <link rel="stylesheet" href="assets/css/home.css">
+    <link rel="stylesheet" href="assets/css/catalogo.css">
+    <link rel="stylesheet" href="assets/css/home.css">
+  {{/if}}
+  {{#if serviciosCSS}}
+    <link rel="stylesheet" href="assets/css/servicios.css">
+  {{/if}}
 </head>
 <body>
       {{>header}}

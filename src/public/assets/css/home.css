@@ -73,6 +73,10 @@ main{
     grid-template-rows:  repeat(auto-fit, minmax(290px, 300px));
     gap: 30px;
 }
+.grid p{
+    margin: 10px 0 15px 0;
+    text-align: center;
+}
     .grid .container{
         text-align: center;
         padding: 25px 0px;
@@ -99,4 +103,5 @@ main{
         }
         .grid .container .albumInfo a{
             margin-top: 15px;
+            transform: translateY(10px);
         }
