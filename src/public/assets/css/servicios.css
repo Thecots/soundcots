@@ -67,7 +67,7 @@ main{
     user-select: none;
     width: 20%;
     margin-bottom: 10px;
-    filter: invert(20%) sepia(14%) saturate(81%) hue-rotate(243deg) brightness(101%) contrast(93%);
+    filter: invert(0%) sepia(5%) saturate(7500%) hue-rotate(239deg) brightness(97%) contrast(105%);
 }
 .service h3{
     font-weight: 600;

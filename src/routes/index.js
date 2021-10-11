@@ -22,7 +22,7 @@ router.get("/servicios", (req, res) => {
 /* Catalogo */
 router.get("/catalogo", (req, res) => {
   res.render("catalogo", {
-    txt: "lorem ipsum sit amet CONTACTE",
+    catalogo: true,
     title: "Contacte",
     active: { Contacte: true },
   });

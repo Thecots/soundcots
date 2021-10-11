@@ -118,3 +118,16 @@ header{
 .dpn{
     display: none;
 }
+
+.an1{
+    animation: fadeInUp;
+    animation-duration: 0.8s; 
+  }
+  .an3{
+    animation: pulse;
+    animation-duration: 0.8s; 
+  }
+  .an2 {
+    animation: zoomIn;
+    animation-duration: 0.8s; 
+  }
