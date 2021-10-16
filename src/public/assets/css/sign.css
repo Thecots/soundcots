@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat',sans-serif;
+    font-size: 16px;
+}
+
+
+section{
+    margin-top: 5%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .625rem;
+}
+
+/* Sign box*/
+.signBox{
+    position: sticky;
+    width: 30rem;
+    max-height: 100%;
+    max-height: 100%;
+    height: auto;
+    border-radius: .3125rem;
+    padding: 4.5rem 1.5rem;
+    background-color: #fff;
+    box-shadow: 0 0 .9375rem #00000005;
+    border: .0625rem solid #dadce0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+/* Cajas donde está el input y el label */
+.signBox .passwords{
+    display: flex;
+    gap: 10px;
+}
+
+/* Searching */
+.signBox .loadBar{
+    position: absolute;    
+    width: 100%;
+    height: .3125rem;
+    top: 0;
+    left: 0;
+}
+
+.signBox .loadBar::after{
+    content: "";
+    width: 8.25rem;
+    height: 100%;
+    background:rgba(65, 105, 225, 0.377);
+    animation: loadBar 0.6s infinite linear;
+}
+
+ @keyframes loadBar{
+    0%{
+        margin-left: 0;
+    }
+    100%{
+        margin-left: 150%;
+    }
+} 
+
+.signBox > h1{
+    font-weight: 400;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Input Box */
+.inputBox{
+    width: 100%;
+}
+
+.inputBox form{
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* input */
+
+.text-field {
+    position: relative;
+    margin: .625rem 0rem;
+    width: 100%;
+}
+
+input {
+    width: 100%;
+    outline: none;
+    border: thin solid #dadce0;
+    color: rgb(0, 0, 0);
+    padding: .725rem .3125rem;
+    border-radius: .3125rem;
+}
+
+input:focus {
+    border:  .125rem solid #5a72fd;
+    background-color:#fff;
+}
+
+.label {
+    color: #999;
+    position: absolute;
+    pointer-events: none;
+    left: .625rem;
+    top: .725rem;
+    transition: 0.2s;
+}
+
+input:focus ~ .label, input:valid ~ .label {
+    top: -0.625rem;
+    left: .625rem;
+    font-size: .9375rem;
+    background-color:#fff;
+    padding:0 .125rem 0 .3125rem;
+}
+
+input:focus ~ .label{
+    color: #5a72fd !important;
+}
+
+input:valid ~ .label{
+    color: #999;
+}
+
+.error input {
+    border: thin solid rgb(241, 32, 32);
+}
+    .error input:focus {
+        border:  .125rem solid rgb(241, 32, 32);
+    }
+.error .label {
+    color: red !important;
+}
+    .error input:focus ~ .label{
+        color: red !important;
+    }
+
+
+/* Buttons box */
+
+.btn-box{
+    margin: 25px 0 5px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-box button{
+    padding: .5rem 1.5625rem;
+    border: none;
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: .2525rem;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn-box button:first-child{
+    color: #5a72fd;
+}
+    .btn-box button:first-child:hover{
+        background-color: #5a72fd1a;
+    }
+
+.btn-box button:last-child{
+    background-color: #5a72fd;
+    color: white;
+}
+.btn-box button:last-child:hover{
+    background-color: #3a57fa;
+}
+
+/* Error */
+
+.spanError{
+    display: none;
+    gap: 5px;
+    color: rgb(241, 32, 32);
+    margin-bottom: 5px;
+}
+
+/* Cheeck box show password  */
+.showPassword{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.showPassword input{
+    width: auto;
+}
+
+.showPassword input, label{
+    cursor: pointer;
+    user-select: none;
+}
+
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    padding: 5px;
+}

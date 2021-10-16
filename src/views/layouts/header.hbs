@@ -5,12 +5,26 @@
       <h1>SOUNDCOTS</h1>
     </div>
     <div class="session">
-      {{!-- Si el usuario no está logeado --}}
-      <a class="t hbtn" >Sign in</a>
-      {{!-- Si el usuario está logeado --}}
-      <img class="t dpn" src="assets/img/user.png" alt="">
-      {{!-- Si el usuario está logeado y es administrador--}}
-      <img class="t dpn" src="assets/img/configurations.png" alt="">
+      {{#if signCSS}}
+        
+      {{else}}
+        {{#if user.state}}
+          {{#if user.type}}
+            {{!-- Si el usuario está logeado y es administrador--}}
+            <img class="t" src="assets/img/configurations.png" alt="">
+          {{else}}
+            {{!-- Si el usuario está logeado --}}
+            <img class="t" src="assets/img/user.png" alt="">
+          {{/if}}
+        {{else}}
+          {{!-- Si el usuario no está logeado --}}
+          <a class="t hbtn"  href="/signin">Sign in</a>
+        {{/if}}
+      {{/if}}
+      
+      
+      
+      
     </div>
   </div>
   <div class="down">

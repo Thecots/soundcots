@@ -1,0 +1,33 @@
+  <section>
+        <div class="signBox">
+            <h1>Crear cuenta</h1>
+            <div class="inputBox">
+                <span class="loadBar"><span></span></span>
+                <form id="formIn" onsubmit="return false">
+                    <div class="text-field" id="username">
+                        <input type="text" required autocomplete="off" autofocus > 
+                        <label class="label">Nombre de usuario</label>
+                    </div>
+                    <span id="sessionErrorUsername" class="spanError"></span>        
+                    <div class="passwords">
+                        <div class="text-field" id="password">
+                            <input id="passwd1" type="password" required autocomplete="off" name="password">
+                            <label class="label">Contraseña</label>
+                        </div>
+                        <div class="text-field" id="confirm">
+                            <input id="passwd2" type="password" required autocomplete="off" name="confirm">
+                            <label class="label">Confirmación</label>
+                        </div>
+                    </div>
+                    <span id="sessionError" class="spanError"></span>        
+                    <div class="showPassword">
+                        <input type="checkbox" id="showPassword" onclick="showPasword()">
+                        <label for="showPassword" > Mostrar contraseña</label>
+                    </div>
+                    <div class="btn-box">
+                        <button type="button" onclick="userHaveAccount()">Ya tengo cuenta</button><button onclick="crearCuenta()">Crear cuenta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>

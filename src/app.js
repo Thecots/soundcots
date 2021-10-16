@@ -8,33 +8,30 @@ const app = express();
 // settings
 app.set("port", process.env.PORT || 3030);
 
-// li diem al node on es troben els views
-
 app.set("views", path.join(__dirname, "views"));
-
-// motor de templating (hbs)
 
 app.engine(
   ".hbs",
   exphbs({
     defaultLayout: "main",
     extname: ".hbs",
-    partialsDir: __dirname + "/views/layouts", // ubicació dels parcials
+    partialsDir: __dirname + "/views/layouts",
   })
 );
 
 app.set("view engine", ".hbs");
 
+// middlewares
+app.use(session({
+  secret: "HayMiMadreElBicho",
+  resave: false,
+  saveUninitialized: false
+}));
+
 // routes
-// app.use(express.json());
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// urlencode -> extended true -> enten objectes i en general qualsevol tipus de dada (el request)
-// urlencode extended és false -> enten strings i arrays
-
 app.use(require("./routes/routes"));
-
-// altres fitxers ( assets )
-
 app.use(express.static(path.join(__dirname, "public")));
 
 module.exports = app;

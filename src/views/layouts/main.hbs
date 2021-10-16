@@ -20,9 +20,19 @@
   {{#if serviciosCSS}}
     <link rel="stylesheet" href="assets/css/servicios.css">
   {{/if}}
+  {{#if signCSS}}
+    <link rel="stylesheet" href="assets/css/sign.css">
+  {{/if}}
 </head>
 <body>
       {{>header}}
       {{{body}}}
+
+  {{#if signJS }}
+    <script src="assets/js/sign.js"></script>
+  {{/if}}
+  {{#if ajaxModule }}
+    <script src="assets/js/ajaxModule.js"></script>
+  {{/if}}
 </body>
 </html>

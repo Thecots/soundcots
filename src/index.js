@@ -1,8 +1,9 @@
 const app = require("./app");
 
 async function main() {
-  await app.listen(3030);
-  console.log("Server on port", 3030);
+  await app.listen(app.get('port'), () => {
+    console.log('Listening on http://localhost:'+app.get('port'));
+  })
 }
 
 main();

@@ -23,7 +23,7 @@ header{
     width: 100%;
     z-index: 100;
     left: 0;
-    box-shadow: 1px -14px 20px 5px;
+    box-shadow: 1px -14px 20px 5px #0000006b;
 }
 
     header div{
