@@ -126,11 +126,13 @@ function crearCuenta(){
         method: 'POST',
         data: obj,
         success: function(r){
-           if(r === 'error'){{
+           if(r === 'error'){
             error("username",true,'Nombre de usuario ya registrado');
             usernameInput.classList.add('error');
-           }}
-           console.log(r);
+           }else{
+            window.location.href = '/signin';
+           }
+           
         }
     })
 }

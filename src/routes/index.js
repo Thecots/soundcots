@@ -1,18 +1,21 @@
 const express = require("express");
+const admin = require('firebase-admin');
 const router = express.Router();
 
+// database firebase
+const serviceAccount = require('../../node-firebase-ejemplo-39504-firebase-adminsdk-77fhz-7a95368c4d.json');
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://node-firebase-ejemplo-39504-default-rtdb.europe-west1.firebasedatabase.app/',
+});
+
+const db = admin.database();
+
+// user state
 const user = {state: false, type: false};
 
-let db = [
-  {
-    id: 1,
-    user: 'hacker',
-    password: 'hacker'
-  }
-]
-
 // Middlewares
-const sign = (req,res, next) => {
+const sign = async (req,res, next) => {
   if(req.session.userId){
       res.redirect('/');
   }else{
@@ -56,7 +59,10 @@ router.get("/catalogo", isLogged, (req, res) => {
 });
 
 /* Contacto */
-router.get("/contacto", isLogged, (req, res) => {
+router.get("/contacto", isLogged, async(req, res) => {
+  const p = await db.collection('users');
+  console.log(p);
+
   res.render("contacto", {
     contactoCSS: true,
   });
@@ -72,11 +78,19 @@ router.get("/signin",sign, (req, res) => {
   });
 });
 
-router.post("/signin",sign, (req, res) => {
+router.post("/signin",sign, async(req, res) => {
   console.log(db);
   const {username, password} = req.body;
-  let x = db.findIndex(e => e.user === username);
-  if(x >= 0){
+  let x = '';
+  await db.ref('users').once('value',(s) => {
+    Object.entries(s.val()).forEach(n => {
+      if( n[1].username === username){
+        x = n[0];
+      }
+    })
+  })
+  
+  if(x != ''){
     if(db[x].password == password){
       // login
       req.session.userId = db[x].id;
@@ -101,16 +115,20 @@ router.get("/signup",sign, (req, res) => {
   });
 });
 
-router.post("/signup",sign, (req, res) => {
+router.post("/signup",sign, async (req, res) => {
   const {username, password} = req.body;
-  const user = db.find(e => e.user === username);
-  console.log(user);
-  if(!user){
-    db.push({
-      id: (db[(db.length-1)].id)+1,
-      username,
-      password,
+  let x = 0;
+  await db.ref('users').once('value',(s) => {
+    Object.entries(s.val()).forEach(n => {
+      if( n[1].username === username){
+        x = 1;
+      }
     })
+  })
+
+  if(x === 0){
+    console.log('lol');
+    db.ref('users').push({username, password});
     res.send('bien')
   }else{
     res.send('error')
