@@ -34,8 +34,13 @@ next();
 }
 
 /* Home */
-router.get("/", isLogged, (req, res) => {
-  res.render("index", {
+router.get("/", isLogged, async(req, res) => {
+  await db.ref('users').once('value',(snapshot) => {
+    const data = snapshot.val();
+    console.log(data);
+  })
+
+    res.render("index", {
     homeCSS: true,
     user,
   });
