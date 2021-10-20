@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session")
 const admin = require('firebase-admin');
 const router = express.Router();
 
@@ -15,6 +16,8 @@ const db = admin.database();
 const user = {state: false, type: false};
 
 // Middlewares
+
+
 const sign = async (req,res, next) => {
   if(req.session.userId){
       res.redirect('/');
@@ -34,12 +37,7 @@ next();
 }
 
 /* Home */
-router.get("/", isLogged, async(req, res) => {
-  await db.ref('users').once('value',(snapshot) => {
-    const data = snapshot.val();
-    console.log(data);
-  })
-
+router.get("/", isLogged, (req, res) => {  
     res.render("index", {
     homeCSS: true,
     user,
@@ -86,28 +84,21 @@ router.get("/signin",sign, (req, res) => {
 router.post("/signin",sign, async(req, res) => {
   console.log(db);
   const {username, password} = req.body;
-  let x = '';
-  await db.ref('users').once('value',(s) => {
-    Object.entries(s.val()).forEach(n => {
-      if( n[1].username === username){
-        x = n[0];
-      }
-    })
+  
+  await db.ref('users').once('value',(snapshot) => {
+    const data = snapshot.val();   
+    let x = 0;
+    Object.keys(data).forEach(n => {
+      if(username == data[n].username && password == data[n].password){
+        req.session.userId = n;
+        user.state = true;
+        res.send('ok');
+        return 0;
+      }      
+    });
   })
-  
-  if(x != ''){
-    if(db[x].password == password){
-      // login
-      req.session.userId = db[x].id;
-      user.state = true;
-      res.send('ok')
-    }else{
-      res.send('passwordError')
-    }
-  }else{
-    res.send('UserError')
-  }
-  
+  res.send('UserError');
+    
 });
 
 /* SignUp */
@@ -123,16 +114,17 @@ router.get("/signup",sign, (req, res) => {
 router.post("/signup",sign, async (req, res) => {
   const {username, password} = req.body;
   let x = 0;
-  await db.ref('users').once('value',(s) => {
-    Object.entries(s.val()).forEach(n => {
-      if( n[1].username === username){
+  await db.ref('users').once('value',(snapshot) => {
+    const data = snapshot.val();   
+    Object.keys(data).forEach(n => {
+      if(username == data[n].username){
         x = 1;
       }
-    })
+      
+    });
   })
 
-  if(x === 0){
-    console.log('lol');
+  if(x === 1){
     db.ref('users').push({username, password});
     res.send('bien')
   }else{
