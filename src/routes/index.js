@@ -26,12 +26,11 @@ const sign = async (req,res, next) => {
   }
 }
 
-
 const isLogged = (req, res, next) => {
   if(req.session.userId){
-    user.state = true;
+    user.state = true; 
   }else{
-    user.state = false;
+    user.state = false; 
   }
 next();
 }
@@ -64,7 +63,6 @@ router.get("/catalogo", isLogged, (req, res) => {
 /* Contacto */
 router.get("/contacto", isLogged, async(req, res) => {
   const p = await db.collection('users');
-  console.log(p);
 
   res.render("contacto", {
     contactoCSS: true,
@@ -82,23 +80,27 @@ router.get("/signin",sign, (req, res) => {
 });
 
 router.post("/signin",sign, async(req, res) => {
-  console.log(db);
   const {username, password} = req.body;
   
   await db.ref('users').once('value',(snapshot) => {
     const data = snapshot.val();   
     let x = 0;
     Object.keys(data).forEach(n => {
-      if(username == data[n].username && password == data[n].password){
-        req.session.userId = n;
-        user.state = true;
-        res.send('ok');
-        return 0;
+      if(username == data[n].username){
+        if(password == data[n].password){
+          req.session.userId = n;
+          user.state = true;
+          res.send('ok');
+          return 0;
+        }else{
+          res.send('passwordError');
+          return 0;
+        }
       }      
+      res.send('UserError');
     });
   })
-  res.send('UserError');
-    
+  
 });
 
 /* SignUp */
@@ -120,16 +122,25 @@ router.post("/signup",sign, async (req, res) => {
       if(username == data[n].username){
         x = 1;
       }
-      
+
     });
+
+    if(x != 1){
+      db.ref('users').push({username, password});
+      res.send('bien')
+    }else{
+      res.send('error')
+    } 
   })
 
-  if(x === 1){
-    db.ref('users').push({username, password});
-    res.send('bien')
-  }else{
-    res.send('error')
-  } 
 });
+
+/* Cerrar sessión */
+
+router.post("/signout", isLogged, (req, res) => {
+  req.session.userId = null;
+  user.type = false;
+  res.send('ok')
+})
 
 module.exports = router;
