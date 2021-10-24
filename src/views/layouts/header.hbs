@@ -5,25 +5,21 @@
       <h1>SOUNDCOTS</h1>
     </div>
     <div class="session">
-      {{#if signCSS}}
-        
-      {{else}}
         {{#if user.state}}
           {{#if user.type}}
             {{!-- Si el usuario está logeado y es administrador--}}
-            <img class="t" src="assets/img/configurations.png" alt="">
+            <img class="t" src="assets/img/configurations.png" onclick="dashboard()">
           {{else}}
             {{!-- Si el usuario está logeado --}}
             <img class="t" src="assets/img/user.png" alt="">
             <img class="t" src="assets/img/basket.png"  alt="">
-            <img class="t" src="assets/img/signout.png" onclick="signout()" alt="">
           {{/if}}
+            <img class="t" src="assets/img/signout.png" onclick="signout()" alt="">
         {{else}}
           {{!-- Si el usuario no está logeado --}}
           <a class="t hbtn"  href="/signin">Sign in</a>
         {{/if}}
-      {{/if}}
-      
+
       
       
       
@@ -45,12 +41,12 @@
           </li>
       </nav>
   </div>
-  {{#if catalogo}}
+  {{!-- {{#if catalogo}}
    <section class="buscador">
       <span>
         <input type="text">
         <img class="" src="assets/img/loupe.png" alt="">
       </span>
     </section>
-  {{/if}}
+  {{/if}} --}}
 </header>

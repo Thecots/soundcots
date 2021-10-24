@@ -1,5 +1,5 @@
 const signout = () => {
-    console.log('x');
+
     $.ajax({
         url: '/signout',
         method: 'POST',
@@ -8,6 +8,8 @@ const signout = () => {
         },
     });
 }
+
+const dashboard = () => {location.href = "/dashboard"}
 
 const displayMeny = () => {
     document.querySelector('#screenToRemove #box').style.display = "none"

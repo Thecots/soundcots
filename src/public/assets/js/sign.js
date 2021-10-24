@@ -37,6 +37,7 @@ function error(type,e,t){
 
 /* On click  "Crear cuenta" redirect to signiup*/
 function iniciarSession(){
+    setloadbar(true);
     restartErrors();
     let elements = document.getElementById("formIn").elements;
     let u = elements.item(0).value, p = elements.item(1).value;
@@ -58,6 +59,7 @@ function iniciarSession(){
         method: 'POST',
         data: obj,
         success: function(r){
+            setloadbar(false);
             if(r == 'passwordError' || r ==  'UserError'){    
                 if(r == 'passwordError'){
                     error("password",true,'Contraseña incorrecta');
@@ -96,6 +98,7 @@ function restartErrors(){
 /* On click Create Account */
 function crearCuenta(){
     restartErrors();
+    setloadbar(true);
     let elements = document.getElementById("formIn").elements;
     let u = elements.item(0).value, p = elements.item(1).value, c = elements.item(2).value;
         if(u == ''){
@@ -126,6 +129,7 @@ function crearCuenta(){
         method: 'POST',
         data: obj,
         success: function(r){
+            setloadbar(false);
            if(r === 'error'){
             error("username",true,'Nombre de usuario ya registrado');
             usernameInput.classList.add('error');

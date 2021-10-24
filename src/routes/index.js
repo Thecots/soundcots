@@ -17,6 +17,13 @@ const user = {state: false, type: false};
 
 // Middlewares
 
+const adminCheck = async (req, res, next) => {
+  if(user.type === true){
+    next();
+  }else{
+    res.redirect('/');
+  }
+}
 
 const sign = async (req,res, next) => {
   if(req.session.userId){
@@ -62,10 +69,10 @@ router.get("/catalogo", isLogged, (req, res) => {
 
 /* Contacto */
 router.get("/contacto", isLogged, async(req, res) => {
-  const p = await db.collection('users');
-
+  console.log(user);
   res.render("contacto", {
     contactoCSS: true,
+    user,
   });
 });
 
@@ -90,15 +97,16 @@ router.post("/signin",sign, async(req, res) => {
         if(password == data[n].password){
           req.session.userId = n;
           user.state = true;
+          user.type = data[n].tpye;
           res.send('ok');
-          return 0;
+          x = 1;
         }else{
           res.send('passwordError');
-          return 0;
+          x = 1;
         }
       }      
-      res.send('UserError');
     });
+    if(x != 1){res.send('UserError');}
   })
   
 });
@@ -126,7 +134,7 @@ router.post("/signup",sign, async (req, res) => {
     });
 
     if(x != 1){
-      db.ref('users').push({username, password});
+      db.ref('users').push({username, password, tpye: false});
       res.send('bien')
     }else{
       res.send('error')
@@ -142,5 +150,14 @@ router.post("/signout", isLogged, (req, res) => {
   user.type = false;
   res.send('ok')
 })
+
+
+/* Dashboard */
+
+router.get("/dashboard",adminCheck, (req, res) => {
+  res.render("dashboard", {
+    user,
+  });
+});
 
 module.exports = router;
