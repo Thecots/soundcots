@@ -9,6 +9,8 @@ const signout = () => {
     });
 }
 
+const cesta = () => { location.href = "/cesta"}
+
 const dashboard = () => {location.href = "/dashboard"}
 
 const displayMeny = () => {

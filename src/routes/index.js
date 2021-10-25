@@ -17,6 +17,14 @@ const user = {state: false, type: false};
 
 // Middlewares
 
+const userAuth = async(req,res,next) => {
+  if(!req.session.userId){
+    res.redirect('/');
+}else{
+    next();
+}
+}
+
 const adminCheck = async (req, res, next) => {
   if(user.type === true){
     next();
@@ -53,6 +61,11 @@ const isLogged = (req, res, next) => {
 
 /* Home */
 router.get("/", isLogged, async(req, res) => { 
+await docRef.set({
+  first: 'Ada',
+  last: 'Lovelace',
+  born: 1815
+});
   await db.ref('products').once('value',(snapshot) => {
     const data = snapshot.val();   
     let products = [];
@@ -110,6 +123,8 @@ router.get("/catalogo", isLogged, async(req, res) => {
 
 /* Contacto */
 router.get("/contacto", isLogged, async(req, res) => {
+  const citiesRef = db.collection('cities');
+  console.log(citiesRef);
   res.render("contacto", {
     contactoCSS: true,
     user,
@@ -174,7 +189,7 @@ router.post("/signup",sign, async (req, res) => {
     });
 
     if(x != 1){
-      db.ref('users').push({username, password, tpye: false});
+      db.ref('users').push({username, password, tpye: false, cesta: []});
       res.send('bien')
     }else{
       res.send('error')
@@ -191,7 +206,7 @@ router.post("/signout", isLogged, (req, res) => {
   res.send('ok');
 })
 
-router.get("/product/:id", async(req, res) => {
+router.get("/product/:id",isLogged, async(req, res) => {
   const {id} = req.params;
   await db.ref('products').once('value',(snapshot) => {
     const data = snapshot.val(),rec = [], lol = [];
@@ -228,13 +243,23 @@ router.get("/product/:id", async(req, res) => {
 
 });
 
+router.get("/cesta", userAuth, async(req, res) => {
+
+
+  res.render('cesta',{
+    user,
+    id: req.session.userId,
+  });
+})
 
 /* Dashboard */
 
 router.get("/dashboard",adminCheck, (req, res) => {
+  if(user.state == false){res.render('/')}
   res.render("dashboard", {
     user,
   });
 });
 
+/* Cesta */
 module.exports = router;
