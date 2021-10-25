@@ -29,6 +29,10 @@
   {{#if productosCSS}}
     <link rel="stylesheet" href="/assets/css/productos.css">
   {{/if}}
+  {{#if cestaCSS}}
+   <link rel="stylesheet" href="/assets/css/cesta.css"> 
+  {{/if}}
+
 </head>
 <body>
       {{>header}}
@@ -37,8 +41,11 @@
   {{#if signJS }}
     <script src="/assets/js/sign.js"></script>
   {{/if}}
-
+  {{!-- Sweetalert2 --}}
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  {{!-- Jquery AJAX Module --}}
   <script src="/assets/js/ajaxModule.js"></script>
+  {{!-- .JS GLOBAL --}}
   <script src="/assets/js/global.js"></script>
 </body>
 </html>

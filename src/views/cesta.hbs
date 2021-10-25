@@ -1,1 +1,29 @@
-{{id}}
+<section>
+    <h1>Cesta</h1>
+    <hr>
+    {{#if cesta}}
+        <div class="cestatrue">
+            {{#each cesta}}
+            <div class="item">
+                <div class="start">
+                    <div class="img">
+                    <img src="/assets/img/albums/{{this.foto}}" alt="">
+                    </div>
+                    <div class="info">
+                        <h1>{{this.album}}</h1>
+                        <h2>{{this.artista}}</h2>
+                        <h3>Precio: {{this.precio}}€</h3>
+                    </div>
+                </div>
+                <div class="delete">
+                    <button class="delete" onclick="cestaDelete('{{this.id}}')">Delete</button>
+                </div>
+            </div>
+        {{/each}}
+        </div>
+    {{else}}
+    <div class="cestavacia">
+        <h1>La cesta está vacía</h1>
+    </div>
+    {{/if}}
+</section>

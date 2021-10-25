@@ -20,3 +20,36 @@ const displayMeny = () => {
 const screenToRemove = () => {
     document.querySelector('#screenToRemove').style.display = "none"
 }
+
+const addToCesta = (id) => {
+    $.ajax({
+        url: '/addToBasket',
+        method: 'POST',
+        data:{ id },
+        success: function(r){
+            if(r == "error"){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ERROR',
+                    text: '¡Inicia sesión para poder añadir productos a la cesta!',
+                  })
+            }else{
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Prodcuto añadido correctamente',
+                  })
+            }
+        },
+    });
+}
+
+const cestaDelete = (e) => {
+    $.ajax({
+        url: '/deleteCesta',
+        method: 'POST',
+        data: {id:e},
+        success: function(r){
+            location.reload();
+        },
+    });
+}

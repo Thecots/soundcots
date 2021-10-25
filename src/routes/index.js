@@ -200,6 +200,8 @@ router.post("/signout", isLogged, (req, res) => {
   res.send('ok');
 })
 
+
+/* PRODUCTOS */
 router.get("/product/:id",isLogged, async(req, res) => {
   const {id} = req.params;
   await db.ref('products').once('value',(snapshot) => {
@@ -208,7 +210,7 @@ router.get("/product/:id",isLogged, async(req, res) => {
         let x = Math.round(Math.random()*Object.keys(data).length);
         if(lol.find(e => e == x) == undefined && Object.keys(data)[x] != id && Object.keys(data)[x] != undefined) {
             lol.push(x);
-            album = data[Object.keys(data)[x]].album.length < 15 ? data[Object.keys(data)[x]].album :data[Object.keys(data)[x]].album.substring(0,19)+" ...";
+            album = data[Object.keys(data)[x]].album.length < 10 ? data[Object.keys(data)[x]].album :data[Object.keys(data)[x]].album.substring(0,19)+" ...";
             rec.push({
               album,
               artista:data[Object.keys(data)[x]].artista,
@@ -228,6 +230,7 @@ router.get("/product/:id",isLogged, async(req, res) => {
           rec,
           productosCSS: true,
           user,
+          id: n
         });
         return;
       }
@@ -237,14 +240,82 @@ router.get("/product/:id",isLogged, async(req, res) => {
 
 });
 
-router.get("/cesta", userAuth, async(req, res) => {
-  db.
+/* Cesta */
+router.get("/cesta",userAuth,  async(req, res) => {
+  await db.ref('users').once('value',(snapshot) => {
+    const data = snapshot.val();
+    let cesta = [];
+    if(data[req.session.userId].cesta === undefined){
+      cesta = false;
+      res.render("cesta", {
+        user,
+        cestaCSS: true,
+        cesta
+      });
+    }else{
+      let x = data[req.session.userId].cesta;
+        db.ref('products').once('value',(snapshot2) => {
+        const data2 = snapshot2.val();
 
-  res.render('cesta',{
-    user,
-    id: req.session.userId,
+          for (let i = 0; i < x.length; i++) {
+            cesta.push({
+              album: data2[x[i]].album,
+              artista: data2[x[i]].artista,
+              precio: data2[x[i]].precio,
+              foto: data2[x[i]].foto,
+              id:x[i]
+            });
+          }
+
+          res.render("cesta", {
+            user,
+            cestaCSS: true,
+            cesta
+          });
+      });
+
+    }
+    
   });
 })
+
+/* Añadir producto a la cesta */
+
+router.post("/addToBasket",isLogged, async(req, res) => {
+  const {id} = req.body;
+  if(!req.session.userId){
+    res.send('error');
+  }else{
+    await db.ref('users').once('value',(snapshot) => {
+      const data = snapshot.val();
+      if(data[req.session.userId].cesta === undefined){
+        db.ref('users/'+req.session.userId+'/cesta').set([id]);
+      }else{
+        let x = data[req.session.userId].cesta
+        x.push(id);
+        db.ref('users/'+req.session.userId+'/cesta').set(x);
+      }
+      res.send('ok');
+    });
+  }
+
+});
+
+/* Borrar items de la cesta */
+router.post("/deleteCesta",isLogged, async(req, res) => {
+  const {id} = req.body;
+ 
+    await db.ref('users').once('value',(snapshot) => {
+      const data = snapshot.val();
+      let g = data[req.session.userId].cesta.indexOf(id);
+      data[req.session.userId].cesta.splice(g,1)
+      db.ref('users/'+req.session.userId+'/cesta').set(data[req.session.userId].cesta);
+      
+      res.send('ok');
+    });
+
+});
+
 
 /* Dashboard */
 
