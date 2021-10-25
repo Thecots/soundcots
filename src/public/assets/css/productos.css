@@ -7,46 +7,74 @@ section {
     width: 1300px;
     margin: 0 auto;
     height: fit-content;
+    background: #ffff;
+
 }
 
 .box{
     border-radius: 5px;
     margin: 0 10px;
-    background: #ffff;
     display: flex;
-    flex-wrap: wrap;
 }
 
-.picture{
-    padding:25px;
-    width: 500px;
 
+/* INfo */
+
+.info{
+    width: 100%;
+    padding: 25px 5px 25px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.info h1{
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+.info h2{
+    font-weight: 300;
+}
+
+button{width: 230px;
+    border: none;
+    padding: 5px 40px;
+    border-radius: 100px;
+    background: black;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    outline: none;
+    font-weight: 500;
+    text-decoration: none;
+}
+/* FOto */
+
+.picture{
+    width: 500px;
+    padding: 25px;
 }
 
 .picture img{
+    width: 90%;
+}
+
+.xdlolMinecradt33{
+    font-weight: 300 !important;
+    font-size: 20px;
+}
+
+
+.recomendaciones{
     width: 100%;
+    padding: 25px 10px;
 }
 
-.info{
-    padding: 25px 10px 25px 0;
-    height: 504px;
-    position: relative;
-}
-
-.info h3{
-    font-weight: 300;
-    font-size: 25px;
-}
-
-.info h2{
+.recomendaciones h1{
     font-weight: 400;
-    font-size: 45px;
-
+    
 }
 
-.info button{
-    position: absolute;
-    bottom: 0px;
-    border: none;
-    margin-bottom: 25px;
+.box2{
+      
 }

@@ -180,8 +180,7 @@ router.post("/signout", isLogged, (req, res) => {
 router.get("/product/:id", async(req, res) => {
   const {id} = req.params;
   await db.ref('products').once('value',(snapshot) => {
-    const data = snapshot.val();   
-
+    const data = snapshot.val();       
     Object.keys(data).forEach(n => {
       if(n == id){
         let products = data[n];
