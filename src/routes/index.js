@@ -39,8 +39,7 @@ const isLogged = (req, res, next) => {
   }else{
     user.state = false; 
   }
-  console.log(user);
-next();
+  next();
 }
 
 /*   db.ref('products').push(
@@ -182,12 +181,13 @@ router.get("/product/:id", async(req, res) => {
   const {id} = req.params;
   await db.ref('products').once('value',(snapshot) => {
     const data = snapshot.val();   
-    let products = [];
+
     Object.keys(data).forEach(n => {
       if(n == id){
-        products.push(data[n]);
+        let products = data[n];
         res.render("product", {
           products,
+          productosCSS: true,
           user,
         });
         return;

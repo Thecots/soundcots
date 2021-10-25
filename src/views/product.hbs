@@ -1,4 +1,12 @@
-{{#each products}}
-     {{this.album}}
-{{/each}}
-asd
+<section>
+     <div class="box">
+          <div class="picture">
+               <img src="/assets/img/albums/{{products.foto}}" alt="">
+          </div>
+          <div class="info">
+               <h2>{{products.album}}</h2>
+               <h3>Artista: {{products.artista}}</h3>
+               <button class="hbtn">Comprar</button>
+          </div>
+     </div>
+</section>

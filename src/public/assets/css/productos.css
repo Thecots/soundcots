@@ -1,0 +1,52 @@
+body{
+    background: #dae0e6;
+}
+section {
+    margin-top: 2% !important;
+    max-width: 100%;
+    width: 1300px;
+    margin: 0 auto;
+    height: fit-content;
+}
+
+.box{
+    border-radius: 5px;
+    margin: 0 10px;
+    background: #ffff;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.picture{
+    padding:25px;
+    width: 500px;
+
+}
+
+.picture img{
+    width: 100%;
+}
+
+.info{
+    padding: 25px 10px 25px 0;
+    height: 504px;
+    position: relative;
+}
+
+.info h3{
+    font-weight: 300;
+    font-size: 25px;
+}
+
+.info h2{
+    font-weight: 400;
+    font-size: 45px;
+
+}
+
+.info button{
+    position: absolute;
+    bottom: 0px;
+    border: none;
+    margin-bottom: 25px;
+}
