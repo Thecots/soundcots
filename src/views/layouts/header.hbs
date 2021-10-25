@@ -1,20 +1,20 @@
 <header>
   <div class="top">
     <div class="brand" onclick="window.location.href = '/'">
-      <img src="assets/img/logo.png" alt="">
+      <img src="/assets/img/logo.png" alt="">
       <h1>SOUNDCOTS</h1>
     </div>
     <div class="session">
         {{#if user.state}}
           {{#if user.type}}
             {{!-- Si el usuario está logeado y es administrador--}}
-            <img class="t" src="assets/img/configurations.png" onclick="dashboard()">
+            <img class="t" src="/assets/img/configurations.png" onclick="dashboard()">
           {{else}}
             {{!-- Si el usuario está logeado --}}
-            <img class="t" src="assets/img/user.png" alt="">
-            <img class="t" src="assets/img/basket.png"  alt="">
+            <img class="t" src="/assets/img/user.png" alt="">
+            <img class="t" src="/assets/img/basket.png"  alt="">
           {{/if}}
-            <img class="t" src="assets/img/signout.png" onclick="signout()" alt="">
+            <img class="t" src="/assets/img/signout.png" onclick="signout()" alt="">
         {{else}}
           {{!-- Si el usuario no está logeado --}}
           <a class="t hbtn"  href="/signin">Sign in</a>

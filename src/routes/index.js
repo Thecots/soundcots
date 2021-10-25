@@ -39,15 +39,40 @@ const isLogged = (req, res, next) => {
   }else{
     user.state = false; 
   }
+  console.log(user);
 next();
 }
 
+/*   db.ref('products').push(
+    {
+      album: "INTER SHIBUYA - LA MAFIA",
+      artista: "Feid",
+      foto: "intershibuya.jpeg",
+      precio: 10,
+      state: 1
+    }); */
+
 /* Home */
-router.get("/", isLogged, (req, res) => {  
-    res.render("index", {
+router.get("/", isLogged, async(req, res) => { 
+
+  await db.ref('products').once('value',(snapshot) => {
+    const data = snapshot.val();   
+    let products = [];
+    Object.keys(data).forEach(n => {
+      products.push({
+        album: data[n].album,
+        artista: data[n].artista,
+        foto: data[n].foto,
+        precio: data[n].precio,
+        id: n
+      });
+   })
+   res.render("index", {
+    products,
     homeCSS: true,
     user,
   });
+  });    
 });
 
 /* Servicios */
@@ -60,6 +85,9 @@ router.get("/servicios", isLogged, (req, res) => {
 
 /* Catalogo */
 router.get("/catalogo", isLogged, (req, res) => {
+  db.ref('products').once('value', (snapshot) => {
+    
+  })
   res.render("catalogo", {
     catalogo: true,
     catalogoCSS: true,
@@ -69,7 +97,6 @@ router.get("/catalogo", isLogged, (req, res) => {
 
 /* Contacto */
 router.get("/contacto", isLogged, async(req, res) => {
-  console.log(user);
   res.render("contacto", {
     contactoCSS: true,
     user,
@@ -148,8 +175,28 @@ router.post("/signup",sign, async (req, res) => {
 router.post("/signout", isLogged, (req, res) => {
   req.session.userId = null;
   user.type = false;
-  res.send('ok')
+  res.send('ok');
 })
+
+router.get("/product/:id", async(req, res) => {
+  const {id} = req.params;
+  await db.ref('products').once('value',(snapshot) => {
+    const data = snapshot.val();   
+    let products = [];
+    Object.keys(data).forEach(n => {
+      if(n == id){
+        products.push(data[n]);
+        res.render("product", {
+          products,
+          user,
+        });
+        return;
+      }
+   })
+   
+  });    
+
+});
 
 
 /* Dashboard */
