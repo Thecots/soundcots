@@ -53,24 +53,26 @@ const isLogged = (req, res, next) => {
 
 /* Home */
 router.get("/", isLogged, async(req, res) => { 
-
   await db.ref('products').once('value',(snapshot) => {
     const data = snapshot.val();   
     let products = [];
     Object.keys(data).forEach(n => {
-      products.push({
-        album: data[n].album,
-        artista: data[n].artista,
-        foto: data[n].foto,
-        precio: data[n].precio,
-        id: n
-      });
-   })
-   res.render("index", {
-    products,
-    homeCSS: true,
-    user,
-  });
+      if(data[n].state == 1){
+        products.push({
+          album: data[n].album,
+          artista: data[n].artista,
+          foto: data[n].foto,
+          precio: data[n].precio,
+          id: n
+        });
+      }
+    })
+    products = products.sort(() => { return Math.random() - 0.5});
+    res.render("index", {
+      products,
+      homeCSS: true,
+      user,
+    });
   });    
 });
 
@@ -83,15 +85,27 @@ router.get("/servicios", isLogged, (req, res) => {
 });
 
 /* Catalogo */
-router.get("/catalogo", isLogged, (req, res) => {
-  db.ref('products').once('value', (snapshot) => {
-    
-  })
-  res.render("catalogo", {
-    catalogo: true,
-    catalogoCSS: true,
-    user,
-  });
+router.get("/catalogo", isLogged, async(req, res) => {
+  await db.ref('products').once('value',(snapshot) => {
+    const data = snapshot.val();   
+    let products = [];
+    Object.keys(data).forEach(n => {
+        products.push({
+          album: data[n].album,
+          artista: data[n].artista,
+          foto: data[n].foto,
+          precio: data[n].precio,
+          id: n
+      });
+    });
+    res.render("catalogo", {
+      catalogo: true,
+      catalogoCSS: true,
+      products: products.reverse(),
+      user,
+    });
+  });    
+
 });
 
 /* Contacto */
@@ -180,12 +194,29 @@ router.post("/signout", isLogged, (req, res) => {
 router.get("/product/:id", async(req, res) => {
   const {id} = req.params;
   await db.ref('products').once('value',(snapshot) => {
-    const data = snapshot.val();       
+    const data = snapshot.val(),rec = [], lol = [];
+    for (let i = 0; i < 7; i++) {
+        let x = Math.round(Math.random()*Object.keys(data).length);
+        if(lol.find(e => e == x) == undefined && Object.keys(data)[x] != id && Object.keys(data)[x] != undefined) {
+            lol.push(x);
+            album = data[Object.keys(data)[x]].album.length < 15 ? data[Object.keys(data)[x]].album :data[Object.keys(data)[x]].album.substring(0,19)+" ...";
+            rec.push({
+              album,
+              artista:data[Object.keys(data)[x]].artista,
+              foto:data[Object.keys(data)[x]].foto,
+              precio:data[Object.keys(data)[x]].precio,
+              id:Object.keys(data)[x]
+            });
+        }else{
+          i--;
+        }
+    }
     Object.keys(data).forEach(n => {
       if(n == id){
         let products = data[n];
         res.render("product", {
           products,
+          rec,
           productosCSS: true,
           user,
         });

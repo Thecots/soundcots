@@ -8,14 +8,25 @@
                     <h1>{{products.album}}.</h1>
                     <h2>{{products.artista}}.</h2>
                </div>
-               <h1 class="xdlolMinecradt33">Preu: {{products.precio}}€</h1>
+               <h1 class="xdlolMinecradt33">Precio: {{products.precio}}€</h1>
                <button clsas="hbtn">Añadir a la cesta</button>
           </div>
      </div>
      <div class="recomendaciones">
-          <h1>También te podría gustar: NADA</h1>
+          <h1>También te podría gustar:</h1>
           <div class="box2">
-
+               {{#each rec}}
+                    <div class="container ">
+                         <div class="albumImgBox">
+                         <img src="/assets/img/albums/{{this.foto}}" alt="">
+                         </div>
+                         <div class="albumInfo ">
+                         <p>{{this.album}}</p>
+                         <p>{{this.artista}}</p>
+                         <a class="hbtn" href="/product/{{this.id}}">Comprar</a>
+                         </div>
+                    </div>
+               {{/each}}
           </div>
      </div>
 </section>
