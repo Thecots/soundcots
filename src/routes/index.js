@@ -9,7 +9,6 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://node-firebase-ejemplo-39504-default-rtdb.europe-west1.firebasedatabase.app/',
 });
-
 const db = admin.database();
 
 // user state
@@ -61,11 +60,7 @@ const isLogged = (req, res, next) => {
 
 /* Home */
 router.get("/", isLogged, async(req, res) => { 
-await docRef.set({
-  first: 'Ada',
-  last: 'Lovelace',
-  born: 1815
-});
+
   await db.ref('products').once('value',(snapshot) => {
     const data = snapshot.val();   
     let products = [];
@@ -123,8 +118,7 @@ router.get("/catalogo", isLogged, async(req, res) => {
 
 /* Contacto */
 router.get("/contacto", isLogged, async(req, res) => {
-  const citiesRef = db.collection('cities');
-  console.log(citiesRef);
+  db.ref('users/-MmtEqI314jIVu0wxJR6/username').set("cerresiete");
   res.render("contacto", {
     contactoCSS: true,
     user,
@@ -244,7 +238,7 @@ router.get("/product/:id",isLogged, async(req, res) => {
 });
 
 router.get("/cesta", userAuth, async(req, res) => {
-
+  db.
 
   res.render('cesta',{
     user,
