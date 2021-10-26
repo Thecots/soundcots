@@ -1,12 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>hola</h1>
-</body>
-</html>
+{{!-- MENÚ --}}
+<div class="menu">
+    <div class="active" onclick="location.href ='/dashboard'">
+        <h1>Productos</h1>
+        <img src="/assets/img/product.png" alt="">
+    </div>
+    <div onclick="location.href ='/dashboard/users'">
+        <h1>Usuarios</h1>
+        <img src="/assets/img/user.png" alt="">
+    </div>
+</div>
+{{!-- MAIN --}}
+<main>
+    <section class="psection">
+        <h1>Productos</h1>
+       <hr>
+       <div class="items">
+           {{#each rec}}
+                <div class="product">
+                    <div class="picture">
+                        <img src="/assets/img/albums/{{this.foto}}" alt="">
+                    </div>
+                    <div class="info">
+                        <h1>{{this.album}}</h1>
+                        <h2>{{this.artista}}</h2>
+                        <h3>{{this.precio}}€</h3>
+                    </div>
+                    <div class="Dbtn">
+                        <button>Editar</button>
+                        <button>Borrar</button>
+                    </div>
+                </div>
+           {{/each}}
+       </div>
+    </section>
+</main>

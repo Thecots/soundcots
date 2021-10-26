@@ -32,12 +32,17 @@
   {{#if cestaCSS}}
    <link rel="stylesheet" href="/assets/css/cesta.css"> 
   {{/if}}
-
+  {{#if dashboardCSS}}
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+  {{/if}}
 </head>
 <body>
-      {{>header}}
+      {{#if dashboardHeader }}
+        {{>dashboardHeader}}
+      {{else}}
+        {{>header}}
+      {{/if}}
       {{{body}}}
-      {{>footer}}
   {{#if signJS }}
     <script src="/assets/js/sign.js"></script>
   {{/if}}

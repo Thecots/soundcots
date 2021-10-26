@@ -318,11 +318,39 @@ router.post("/deleteCesta",isLogged, async(req, res) => {
 
 
 /* Dashboard */
+/* adminCheck,  <--------------------------------------- poner*/ 
+router.get("/dashboard", async(req, res) => {
+  /* if(user.state == false){res.render('/')} */
+  await db.ref('products').once('value',(snapshot) => {
+    const data = snapshot.val(),rec = [];
 
-router.get("/dashboard",adminCheck, (req, res) => {
-  if(user.state == false){res.render('/')}
-  res.render("dashboard", {
+    Object.keys(data).forEach(n => {
+      rec.push({
+        album:data[n].album,
+        artista:data[n].artista,
+        foto:data[n].foto,
+        precio:data[n].precio,
+        id:n
+      });
+    })
+
+    res.render("dashboard", {
+      user,
+      rec: rec.reverse(),
+      dashboardCSS: true,
+      dashboardHeader: true,
+    });
+  });
+
+});
+router.get("/dashboard/users", (req, res) => {
+  /* if(user.state == false){res.render('/')} */
+
+
+  res.render("dashboardUsers", {
     user,
+    dashboardCSS: true,
+    dashboardHeader: true,
   });
 });
 
