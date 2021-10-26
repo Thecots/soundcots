@@ -12,22 +12,27 @@
 {{!-- MAIN --}}
 <main>
     <section class="psection">
-        <h1>Productos</h1>
+        <div class="sstart">
+            <h1>Productos</h1>
+            <button class="t" onclick="location.href = '/newAlbum'">Añadir</button>
+        </div>
        <hr>
        <div class="items">
            {{#each rec}}
                 <div class="product">
-                    <div class="picture">
-                        <img src="/assets/img/albums/{{this.foto}}" alt="">
-                    </div>
-                    <div class="info">
-                        <h1>{{this.album}}</h1>
-                        <h2>{{this.artista}}</h2>
-                        <h3>{{this.precio}}€</h3>
+                    <div class="si">
+                        <div class="picture">
+                            <img src="/assets/img/albums/{{this.foto}}" alt="">
+                        </div>
+                        <div class="info">
+                            <h1>{{this.album}}</h1>
+                            <h2>{{this.artista}}</h2>
+                            <h3>Precio: {{this.precio}}€</h3>
+                        </div>
                     </div>
                     <div class="Dbtn">
-                        <button>Editar</button>
-                        <button>Borrar</button>
+                        <button class="Dbtn1 t">Editar</button>
+                        <button class="Dbtn2 t">Borrar</button>
                     </div>
                 </div>
            {{/each}}

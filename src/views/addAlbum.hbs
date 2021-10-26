@@ -1,0 +1,41 @@
+{{!-- MENÚ --}}
+<div class="menu">
+    <div class="active" onclick="location.href ='/dashboard'">
+        <h1>Productos</h1>
+        <img src="/assets/img/product.png" alt="">
+    </div>
+    <div onclick="location.href ='/dashboard/users'">
+        <h1>Usuarios</h1>
+        <img src="/assets/img/user.png" alt="">
+    </div>
+</div>
+{{!-- MAIN --}}
+<main>
+    <section class="psection">
+        <div class="sstart">
+            <h1>Nuevo álbum</h1>
+        </div>
+       <hr>
+       <div class="addAlbumm">
+           <form>
+              <span>
+                   <p>Nombre del Álbum:</p>
+                    <input type="text" id="album">
+              </span>
+              <span>
+                   <p>Autor:</p>
+                    <input type="text" id="autor">
+              </span>
+              <span>
+                   <p>Precio:</p>
+                    <input type="number" min="0" id="precio">
+              </span>
+              <span>
+                   <p>Imagen:</p>
+                    <input type="file" id="foto">
+              </span><br>
+              <button type="button" class="adbtn" onclick="saveNewAlbum()">Añadir álbum</button>
+           </form>
+       </div>
+    </section>
+</main>

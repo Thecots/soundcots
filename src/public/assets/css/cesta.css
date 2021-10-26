@@ -31,7 +31,8 @@ section > h1 {
     flex-direction: column;
 }
 .cestavacia h1{
-    font-size: 35px;
+    font-size: 45px;
+    font-weight: 300;
 }
 
 /* si hay cesta */
@@ -88,4 +89,20 @@ section > h1 {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.total{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.total span{
+    font-weight: 400;
+    font-size: 25px;
+}
+
+.total h1{
+    font-weight: 300;
+    font-size: 25px;
 }

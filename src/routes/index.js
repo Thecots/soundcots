@@ -256,8 +256,9 @@ router.get("/cesta",userAuth,  async(req, res) => {
       let x = data[req.session.userId].cesta;
         db.ref('products').once('value',(snapshot2) => {
         const data2 = snapshot2.val();
-
+          let total = 0;
           for (let i = 0; i < x.length; i++) {
+            total += data2[x[i]].precio;
             cesta.push({
               album: data2[x[i]].album,
               artista: data2[x[i]].artista,
@@ -268,6 +269,7 @@ router.get("/cesta",userAuth,  async(req, res) => {
           }
 
           res.render("cesta", {
+            total,
             user,
             cestaCSS: true,
             cesta
@@ -338,6 +340,7 @@ router.get("/dashboard", async(req, res) => {
       user,
       rec: rec.reverse(),
       dashboardCSS: true,
+      dashboardJS: true,
       dashboardHeader: true,
     });
   });
@@ -350,9 +353,24 @@ router.get("/dashboard/users", (req, res) => {
   res.render("dashboardUsers", {
     user,
     dashboardCSS: true,
+    dashboardJS: true,
     dashboardHeader: true,
   });
 });
+
+/* NEW ALBUM */
+router.get("/newAlbum", (req, res) => {
+  /* if(user.state == false){res.render('/')} */
+
+
+  res.render("addAlbum", {
+    user,
+    dashboardCSS: true,
+    dashboardJS: true,
+    dashboardHeader: true,
+  });
+});
+
 
 /* Cesta */
 module.exports = router;
