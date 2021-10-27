@@ -1,11 +1,12 @@
 const express = require("express");
 const session = require("express-session")
 const admin = require('firebase-admin');
+const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
 const router = express.Router();
 
-const upload = multer({dest: "/public/assets/img/albums"});
+const upload = multer({dest: "src/public/assets/img/albums"}); 
 
 // database firebase
 const serviceAccount = require('../../node-firebase-ejemplo-39504-firebase-adminsdk-77fhz-7a95368c4d.json');
@@ -254,14 +255,18 @@ router.get("/cesta",userAuth,  async(req, res) => {
         const data2 = snapshot2.val();
           let total = 0;
           for (let i = 0; i < x.length; i++) {
-            total += data2[x[i]].precio;
-            cesta.push({
-              album: data2[x[i]].album,
-              artista: data2[x[i]].artista,
-              precio: data2[x[i]].precio,
-              foto: data2[x[i]].foto,
-              id:x[i]
-            });
+            try {
+              total += parseInt(data2[x[i]].precio);
+              cesta.push({
+                album: data2[x[i]].album,
+                artista: data2[x[i]].artista,
+                precio: data2[x[i]].precio,
+                foto: data2[x[i]].foto,
+                id:x[i]
+              });
+            } catch (error) {
+              
+            }
           }
 
           res.render("cesta", {
@@ -356,6 +361,7 @@ router.get("/dashboard/users", (req, res) => {
 /* NEW ALBUM */
 router.get("/newAlbum", (req, res) => {
   /* if(user.state == false){res.render('/')} */
+
   res.render("addAlbum", {
     user,
     dashboardCSS: true,
@@ -366,25 +372,31 @@ router.get("/newAlbum", (req, res) => {
 
 router.post("/newAlbum", upload.single("foto"), (req, res) => {
   /* if(user.state == false){res.render('/')} */
-  console.log(req.file);
-  console.log(req.body);
-
-
+  const {album, autor,precio} = req.body;
+  const foto1 = req.file.path+'.'+req.file.mimetype.split('/')[1];
+  fs.renameSync(req.file.path, foto1);
+  const foto = req.file.filename+'.'+req.file.mimetype.split('/')[1];
+   db.ref('products').push(
+    {
+      album,
+      artista:autor,
+      foto,
+      precio,
+      state: 0
+    }); 
   res.send('hay mi madre el bicho');
 });
 
 
 
+router.post("/deleteAlbum",async(req,res) => {
+  const {id} = req.body;
 
-/* Cesta */
+  db.ref("products/"+id).remove()
+
+  res.send("ok")
+})
+
 module.exports = router;
 
 
-/*   db.ref('products').push(
-    {
-      album: "INTER SHIBUYA - LA MAFIA",
-      artista: "Feid",
-      foto: "intershibuya.jpeg",
-      precio: 10,
-      state: 1
-    }); */

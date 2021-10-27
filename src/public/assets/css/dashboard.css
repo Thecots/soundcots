@@ -284,3 +284,7 @@ input[type="file"]:focus{
     border-radius: 5px;
     float: right;
 }
+
+input#precio {
+    width: 75px;
+}

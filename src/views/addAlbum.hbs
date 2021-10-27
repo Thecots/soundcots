@@ -17,24 +17,24 @@
             </div>
         <hr>
         <div class="addAlbumm">
-            <form>
+            <form id="form">
                 <span>
                     <p>Nombre del Álbum:</p>
-                        <input type="text" id="album">
+                        <input type="text" id="album" name="album">
                 </span>
                 <span>
                     <p>Autor:</p>
-                        <input type="text" id="autor">
+                        <input type="text" id="autor" name="autor">
                 </span>
                 <span>
                     <p>Precio:</p>
-                        <input type="number" min="0" id="precio">
+                        <input type="number" min="0" id="precio" name="precio"><a style="font-size: 25px; margin-left: 5px;">€</a>
                 </span>
                 <span>
                     <p>Imagen:</p>
-                        <input type="file" accept="image/png, image/jpg, image/jfif, image/jpeg"  id="foto">
+                        <input type="file" name="foto" accept="image/png, image/jpg, image/jfif, image/jpeg"  id="foto">
                 </span><br>
-                <button type="button" class="adbtn" onclick="saveNewAlbum()">Añadir álbum</button>
+                <input type="submit" value="Añadir album">
             </form>
         </div>
         </section>

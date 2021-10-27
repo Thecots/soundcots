@@ -1,31 +1,40 @@
-const saveNewAlbum = (e) => {
-    const album = document.querySelector('#album');
-    const autor = document.querySelector('#autor');
-    const precio = document.querySelector('#precio');
-    const foto = document.querySelector('#foto');
+const form = document.querySelector("#form")
+const album = document.querySelector('#album');
+const autor = document.querySelector('#autor');
+const precio = document.querySelector('#precio');
+const foto = document.querySelector('#foto');
 
-    if(album.value != '' && autor.value != '' && precio.value != '' && foto.value){
-        $.ajax({
-            url: '/newAlbum',
-            method: 'POST',
-            data: {
-                album: album.value,
-                autor: autor.value,
-                precio: precio.value,
-                foto: foto.value,
-            },
-            contentType: 'multipart/form-data',
-            success: function(r){
-                console.log(r);
-               /*  location.reload(); */
-            },
-        });
-    }else{
-        Swal.fire({
-            icon: 'error',
-            title: 'ERROR',
-            text: '¡Campos vacíos',
-          }) 
-    }
+if(form != null){
+    form.addEventListener("submit", (e)=> {
+        e.preventDefault();
+        if(album.value != '' && autor.value != '' && precio.value != '' && foto.value){
+            const formData = new FormData(e.currentTarget);
+            fetch('/newAlbum',{
+                method: 'POST',
+                body: formData
+            }).then(e => {
+                location.href = "/dashboard"
+            })
+        }else{
+            Swal.fire({
+                icon: 'error',
+                title: 'ERROR',
+                text: '¡Campos vacíos',
+              }) 
+        }
     
+    })
+}
+
+const deleteAlbum = (e) => {    
+    $.ajax({
+        url: '/deleteAlbum',
+        method: 'POST',
+        data: {
+            id: e
+        },
+        success: function(r){
+            location.href = "/dashboard";
+        },
+    });
 }
