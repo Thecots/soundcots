@@ -1,41 +1,42 @@
-{{!-- MENÚ --}}
-<div class="menu">
-    <div class="active" onclick="location.href ='/dashboard'">
-        <h1>Productos</h1>
-        <img src="/assets/img/product.png" alt="">
-    </div>
-    <div onclick="location.href ='/dashboard/users'">
-        <h1>Usuarios</h1>
-        <img src="/assets/img/user.png" alt="">
-    </div>
-</div>
-{{!-- MAIN --}}
-<main>
-    <section class="psection">
-        <div class="sstart">
+    {{!-- MENÚ --}}
+    <div class="menu">
+        <div class="active" onclick="location.href ='/dashboard'">
             <h1>Productos</h1>
-            <button class="t" onclick="location.href = '/newAlbum'">Añadir</button>
+            <img src="/assets/img/product.png" alt="">
         </div>
-       <hr>
-       <div class="items">
-           {{#each rec}}
-                <div class="product">
-                    <div class="si">
-                        <div class="picture">
-                            <img src="/assets/img/albums/{{this.foto}}" alt="">
+        <div onclick="location.href ='/dashboard/users'">
+            <h1>Usuarios</h1>
+            <img src="/assets/img/user.png" alt="">
+        </div>
+    </div>
+    {{!-- MAIN --}}
+    <main>
+        <section class="psection">
+            <div class="sstart">
+                <h1>Productos</h1>
+                <button class="t" onclick="location.href = '/newAlbum'">Añadir</button>
+            </div>
+        <hr>
+        <div class="items">
+            {{#each rec}}
+                    <div class="product">
+                        <div class="si">
+                            <div class="picture">
+                                <img src="/assets/img/albums/{{this.foto}}" alt="">
+                            </div>
+                            <div class="info">
+                                <h1>{{this.album}}</h1>
+                                <h2>{{this.artista}}</h2>
+                                <h3>Precio: {{this.precio}}€</h3>
+                            </div>
                         </div>
-                        <div class="info">
-                            <h1>{{this.album}}</h1>
-                            <h2>{{this.artista}}</h2>
-                            <h3>Precio: {{this.precio}}€</h3>
+                        <div class="Dbtn">
+                            <button class="Dbtn1 t">Editar</button>
+                            <button class="Dbtn2 t">Borrar</button>
                         </div>
                     </div>
-                    <div class="Dbtn">
-                        <button class="Dbtn1 t">Editar</button>
-                        <button class="Dbtn2 t">Borrar</button>
-                    </div>
-                </div>
-           {{/each}}
-       </div>
-    </section>
-</main>
+            {{/each}}
+        </div>
+        </section>
+    </main>
+</div>

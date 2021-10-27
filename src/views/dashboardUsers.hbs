@@ -1,18 +1,19 @@
-{{!-- MENÚ --}}
-<div class="menu">
-    <div onclick="location.href ='/dashboard'">
-        <h1>Productos</h1>
-        <img src="/assets/img/product.png" alt="">
+    {{!-- MENÚ --}}
+    <div class="menu">
+        <div onclick="location.href ='/dashboard'">
+            <h1>Productos</h1>
+            <img src="/assets/img/product.png" alt="">
+        </div>
+        <div class="active" onclick="location.href ='/dashboard/users'">
+            <h1>Usuarios</h1>
+            <img src="/assets/img/user.png" alt="">
+        </div>
     </div>
-    <div class="active" onclick="location.href ='/dashboard/users'">
+    {{!-- MAIN --}}
+    <main>
+        <section class="usection">
         <h1>Usuarios</h1>
-        <img src="/assets/img/user.png" alt="">
-    </div>
+        <hr>
+        </section>
+    </main>
 </div>
-{{!-- MAIN --}}
-<main>
-    <section class="usection">
-       <h1>Usuarios</h1>
-       <hr>
-    </section>
-</main>

@@ -1,7 +1,11 @@
 const express = require("express");
 const session = require("express-session")
 const admin = require('firebase-admin');
+const fs = require('fs');
+const multer = require('multer');
 const router = express.Router();
+
+const upload = multer({dest: "/public/assets/img/albums"});
 
 // database firebase
 const serviceAccount = require('../../node-firebase-ejemplo-39504-firebase-adminsdk-77fhz-7a95368c4d.json');
@@ -49,14 +53,6 @@ const isLogged = (req, res, next) => {
   next();
 }
 
-/*   db.ref('products').push(
-    {
-      album: "INTER SHIBUYA - LA MAFIA",
-      artista: "Feid",
-      foto: "intershibuya.jpeg",
-      precio: 10,
-      state: 1
-    }); */
 
 /* Home */
 router.get("/", isLogged, async(req, res) => { 
@@ -349,7 +345,6 @@ router.get("/dashboard", async(req, res) => {
 router.get("/dashboard/users", (req, res) => {
   /* if(user.state == false){res.render('/')} */
 
-
   res.render("dashboardUsers", {
     user,
     dashboardCSS: true,
@@ -361,8 +356,6 @@ router.get("/dashboard/users", (req, res) => {
 /* NEW ALBUM */
 router.get("/newAlbum", (req, res) => {
   /* if(user.state == false){res.render('/')} */
-
-
   res.render("addAlbum", {
     user,
     dashboardCSS: true,
@@ -371,6 +364,27 @@ router.get("/newAlbum", (req, res) => {
   });
 });
 
+router.post("/newAlbum", upload.single("foto"), (req, res) => {
+  /* if(user.state == false){res.render('/')} */
+  console.log(req.file);
+  console.log(req.body);
+
+
+  res.send('hay mi madre el bicho');
+});
+
+
+
 
 /* Cesta */
 module.exports = router;
+
+
+/*   db.ref('products').push(
+    {
+      album: "INTER SHIBUYA - LA MAFIA",
+      artista: "Feid",
+      foto: "intershibuya.jpeg",
+      precio: 10,
+      state: 1
+    }); */
