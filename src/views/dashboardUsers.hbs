@@ -16,12 +16,20 @@
         <hr>
         <table>
             <tr>
-                <th>Usuario</th><th>id</th>
+                <th>Usuario</th><th>id</th><th>admin</th>
             </tr>    
             {{#each rec}}
             <tr>
                 <td>{{this.username}}</td>
                 <td>{{this.id}}</td>
+                <td>
+                    <input type="checkbox" 
+                        {{#if this.admin}}
+                            checked
+                        {{/if}}
+                    onclick="admin('{{this.id}}')"
+                    name="id">
+                </td>
             </tr>
             {{/each}}
         </table>

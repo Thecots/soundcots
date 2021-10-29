@@ -351,10 +351,10 @@ router.get("/dashboard/users",adminCheck, async(req, res) => {
     const data = snapshot.val(),rec = [];
 
     Object.keys(data).forEach(n => {
-      console.log(data[n].username);
       rec.push({
         username:data[n].username,
-        id:n
+        id:n,
+        admin: data[n].tpye
       });
     });
     res.render("dashboardUsers", {
@@ -406,6 +406,20 @@ router.post("/deleteAlbum",adminCheck, async(req,res) => {
 
   res.send("ok")
 })
+
+router.post("/adminstate", adminCheck, async(req,res) => {
+  const {id} = req.body;
+  console.log(id);
+  await db.ref('users').once('value',(snapshot) => {
+    const data = snapshot.val();
+    if(data[id].tpye == false){
+      db.ref('users/'+id+'/tpye').set(true);
+    }else{
+      db.ref('users/'+id+'/tpye').set(false);
+    }
+  
+  });
+});
 
 module.exports = router;
 

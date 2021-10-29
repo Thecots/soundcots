@@ -147,7 +147,8 @@ section > h1{
     padding: 5px;
 }
 .picture img{
-    width: 100px;
+    width: 75px;
+    height: 75px;
 }
 .product{
     display: flex;

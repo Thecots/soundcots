@@ -56,3 +56,14 @@ const deleteAlbum = (e) => {
 
  
 }
+
+const admin = (e) => {
+    $.ajax({
+        url: '/adminstate',
+        method: 'POST',
+        data: {id:e},
+        success: function(r){
+            location.reload();
+        },
+    });
+}
