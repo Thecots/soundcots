@@ -14,6 +14,17 @@
         <section class="usection">
         <h1>Usuarios</h1>
         <hr>
+        <table>
+            <tr>
+                <th>Usuario</th><th>id</th>
+            </tr>    
+            {{#each rec}}
+            <tr>
+                <td>{{this.username}}</td>
+                <td>{{this.id}}</td>
+            </tr>
+            {{/each}}
+        </table>
         </section>
     </main>
 </div>

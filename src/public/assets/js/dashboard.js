@@ -27,14 +27,32 @@ if(form != null){
 }
 
 const deleteAlbum = (e) => {    
-    $.ajax({
-        url: '/deleteAlbum',
-        method: 'POST',
-        data: {
-            id: e
-        },
-        success: function(r){
-            location.href = "/dashboard";
-        },
-    });
+
+    Swal.fire({
+        title: 'Estas seguro?',
+        text: "No podrás revertir los cambios!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar álbum!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: '/deleteAlbum',
+            method: 'POST',
+            data: {
+                id: e
+            },
+            success: function(r){
+                location.href = "/dashboard";
+            },
+        });
+
+        }
+      })
+
+
+
+ 
 }

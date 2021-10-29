@@ -1,9 +1,8 @@
 const express = require("express");
-const session = require("express-session")
 const admin = require('firebase-admin');
 const path = require('path');
-const fs = require('fs');
 const multer = require('multer');
+const fs = require('fs');
 const router = express.Router();
 
 const upload = multer({dest: "src/public/assets/img/albums"}); 
@@ -20,7 +19,6 @@ const db = admin.database();
 const user = {state: false, type: false};
 
 // Middlewares
-
 const userAuth = async(req,res,next) => {
   if(!req.session.userId){
     res.redirect('/');
@@ -322,8 +320,8 @@ router.post("/deleteCesta",isLogged, async(req, res) => {
 
 /* Dashboard */
 /* adminCheck,  <--------------------------------------- poner*/ 
-router.get("/dashboard", async(req, res) => {
-  /* if(user.state == false){res.render('/')} */
+router.get("/dashboard",adminCheck, async(req, res) => {
+   if(user.state == false){res.render('/')}
   await db.ref('products').once('value',(snapshot) => {
     const data = snapshot.val(),rec = [];
 
@@ -347,20 +345,31 @@ router.get("/dashboard", async(req, res) => {
   });
 
 });
-router.get("/dashboard/users", (req, res) => {
-  /* if(user.state == false){res.render('/')} */
+router.get("/dashboard/users",adminCheck, async(req, res) => {
+  if(user.state == false){res.render('/')} 
+  await db.ref('users').once('value',(snapshot) => {
+    const data = snapshot.val(),rec = [];
 
-  res.render("dashboardUsers", {
-    user,
-    dashboardCSS: true,
-    dashboardJS: true,
-    dashboardHeader: true,
+    Object.keys(data).forEach(n => {
+      console.log(data[n].username);
+      rec.push({
+        username:data[n].username,
+        id:n
+      });
+    });
+    res.render("dashboardUsers", {
+      user,
+      rec,
+      dashboardCSS: true,
+      dashboardJS: true,
+      dashboardHeader: true,
+    });
   });
 });
 
 /* NEW ALBUM */
-router.get("/newAlbum", (req, res) => {
-  /* if(user.state == false){res.render('/')} */
+router.get("/newAlbum",adminCheck, (req, res) => {
+  if(user.state == false){res.render('/')}
 
   res.render("addAlbum", {
     user,
@@ -370,8 +379,8 @@ router.get("/newAlbum", (req, res) => {
   });
 });
 
-router.post("/newAlbum", upload.single("foto"), (req, res) => {
-  /* if(user.state == false){res.render('/')} */
+router.post("/newAlbum",adminCheck, upload.single("foto"), (req, res) => {
+  if(user.state == false){res.render('/')}
   const {album, autor,precio} = req.body;
   const foto1 = req.file.path+'.'+req.file.mimetype.split('/')[1];
   fs.renameSync(req.file.path, foto1);
@@ -389,7 +398,8 @@ router.post("/newAlbum", upload.single("foto"), (req, res) => {
 
 
 
-router.post("/deleteAlbum",async(req,res) => {
+router.post("/deleteAlbum",adminCheck, async(req,res) => {
+  if(user.state == false){res.render('/')}
   const {id} = req.body;
 
   db.ref("products/"+id).remove()
