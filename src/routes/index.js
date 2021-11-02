@@ -409,7 +409,6 @@ router.post("/deleteAlbum",adminCheck, async(req,res) => {
 
 router.post("/adminstate", adminCheck, async(req,res) => {
   const {id} = req.body;
-  console.log(id);
   await db.ref('users').once('value',(snapshot) => {
     const data = snapshot.val();
     if(data[id].tpye == false){
