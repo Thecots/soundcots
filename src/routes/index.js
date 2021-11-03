@@ -12,10 +12,10 @@ const serviceAccount = require('../../node-firebase-ejemplo-39504-firebase-admin
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://node-firebase-ejemplo-39504-default-rtdb.europe-west1.firebasedatabase.app/',
+  storageBucket: 'gs://node-firebase-ejemplo-39504.appspot.com'
 });
 const db = admin.database();
-
-
+const storage = admin.storage().bucket();
 // user state
 const user = {state: false, type: false};
 
@@ -381,12 +381,21 @@ router.get("/newAlbum",adminCheck, (req, res) => {
 });
 
 router.post("/newAlbum",adminCheck, upload.single("foto"), (req, res) => {
-  if(user.state == false){res.render('/')}
+  if(user.state == false){res.render('/')};
+  
+  
   const {album, autor,precio} = req.body;
   const foto1 = req.file.path+'.'+req.file.mimetype.split('/')[1];
   fs.renameSync(req.file.path, foto1);
   const foto = req.file.filename+'.'+req.file.mimetype.split('/')[1];
-   db.ref('products').push(
+  
+  
+  const storageRef = storage.storage.ref('images/'+foto);
+  const task1 = storageRef.put(req.file)
+  task1.on('state_change',(snapshot) => {
+    console.log('hola');
+  })
+  db.ref('products').push(
     {
       album,
       artista:autor,
