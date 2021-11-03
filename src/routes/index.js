@@ -15,6 +15,7 @@ admin.initializeApp({
 });
 const db = admin.database();
 
+
 // user state
 const user = {state: false, type: false};
 
@@ -393,6 +394,11 @@ router.post("/newAlbum",adminCheck, upload.single("foto"), (req, res) => {
       precio,
       state: 0
     }); 
+
+    var stroageRef =admin.storage().ref('src/public/assets/img/albums',foto)
+
+    var task = stroageRef.put(req.file);
+
   res.send('hay mi madre el bicho');
 });
 
