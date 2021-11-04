@@ -1,21 +1,24 @@
 const express = require("express");
 const admin = require('firebase-admin');
 const path = require('path');
-const multer = require('multer');
 const fs = require('fs');
 const router = express.Router();
 
-const upload = multer({dest: "src/public/assets/img/albums"}); 
+const cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'dqaomwude',
+    api_key: '642551195527337',
+    api_secret: 'y-UkdiFtaT4IbChRWlE8RtR5OQk'
+})
 
 // database firebase
 const serviceAccount = require('../../node-firebase-ejemplo-39504-firebase-adminsdk-77fhz-7a95368c4d.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://node-firebase-ejemplo-39504-default-rtdb.europe-west1.firebasedatabase.app/',
-  storageBucket: 'gs://node-firebase-ejemplo-39504.appspot.com'
 });
 const db = admin.database();
-const storage = admin.storage().bucket();
+
 // user state
 const user = {state: false, type: false};
 
@@ -380,34 +383,20 @@ router.get("/newAlbum",adminCheck, (req, res) => {
   });
 });
 
-router.post("/newAlbum",adminCheck, upload.single("foto"), (req, res) => {
+router.post("/newAlbum",adminCheck,async(req, res) => {
   if(user.state == false){res.render('/')};
   
-  
-  const {album, autor,precio} = req.body;
-  const foto1 = req.file.path+'.'+req.file.mimetype.split('/')[1];
-  fs.renameSync(req.file.path, foto1);
-  const foto = req.file.filename+'.'+req.file.mimetype.split('/')[1];
-  
-  
-  const storageRef = storage.storage.ref('images/'+foto);
-  const task1 = storageRef.put(req.file)
-  task1.on('state_change',(snapshot) => {
-    console.log('hola');
-  })
+  const {album, autor, precio} = req.body;  
+  const result = await cloudinary.v2.uploader.upload(req.file.path);
+
   db.ref('products').push(
     {
       album,
       artista:autor,
-      foto,
+      foto: result.url,
       precio,
       state: 0
     }); 
-
-    var stroageRef =admin.storage().ref('src/public/assets/img/albums',foto)
-
-    var task = stroageRef.put(req.file);
-
   res.send('hay mi madre el bicho');
 });
 

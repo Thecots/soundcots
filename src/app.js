@@ -2,7 +2,7 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const path = require("path");
 const session = require("express-session");
-
+const multer = require('multer');
 const app = express();
 
 // settings
@@ -26,6 +26,14 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+
+const storage = multer.diskStorage({
+  destination: path.join(__dirname,'public/img/album'),
+  filename: (req,file,cb) => {
+      cb(null,new Date().getTime()+path.extname(file.originalname));
+  }
+})
+app.use(multer({storage}).single('foto'));
 
 // routes
 app.use(express.json());
