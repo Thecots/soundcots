@@ -26,8 +26,8 @@ if(form != null){
     })
 }
 
-const deleteAlbum = (e) => {    
-
+const deleteAlbum = (e,public_id) => {    
+    console.log(public_id);
     Swal.fire({
         title: 'Estas seguro?',
         text: "No podrás revertir los cambios!",
@@ -42,7 +42,8 @@ const deleteAlbum = (e) => {
             url: '/deleteAlbum',
             method: 'POST',
             data: {
-                id: e
+                id: e,
+                public_id
             },
             success: function(r){
                 location.href = "/dashboard";

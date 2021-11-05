@@ -117,7 +117,6 @@ router.get("/catalogo", isLogged, async(req, res) => {
 
 /* Contacto */
 router.get("/contacto", isLogged, async(req, res) => {
-  db.ref('users/-MmtEqI314jIVu0wxJR6/username').set("cerresiete");
   res.render("contacto", {
     contactoCSS: true,
     user,
@@ -335,6 +334,7 @@ router.get("/dashboard",adminCheck, async(req, res) => {
         artista:data[n].artista,
         foto:data[n].foto,
         precio:data[n].precio,
+        public_id: data[n].public_id,
         id:n
       });
     })
@@ -388,12 +388,13 @@ router.post("/newAlbum",adminCheck,async(req, res) => {
   
   const {album, autor, precio} = req.body;  
   const result = await cloudinary.v2.uploader.upload(req.file.path);
-
+  console.log(result.public_id);
   db.ref('products').push(
     {
       album,
       artista:autor,
       foto: result.url,
+      public_id: result.public_id,
       precio,
       state: 0
     }); 
@@ -404,10 +405,10 @@ router.post("/newAlbum",adminCheck,async(req, res) => {
 
 router.post("/deleteAlbum",adminCheck, async(req,res) => {
   if(user.state == false){res.render('/')}
-  const {id} = req.body;
+  const {id, public_id} = req.body;
 
-  db.ref("products/"+id).remove()
-
+  cloudinary.v2.uploader.destroy(public_id);
+  db.ref("products/"+id).remove();
   res.send("ok")
 })
 
